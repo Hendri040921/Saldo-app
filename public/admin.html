@@ -1,0 +1,21 @@
+<!-- Hanya bisa diakses admin -->
+<input type="number" id="amount" placeholder="Nominal Saldo">
+<button onclick="generateCode()">Generate Kode</button>
+
+<script>
+async function generateCode() {
+    const amount = document.getElementById('amount').value;
+    
+    // Generate kode unik
+    const code = 'SALDO-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    
+    // Simpan ke Firestore
+    await db.collection('saldoCodes').doc(code).set({
+        amount: parseInt(amount),
+        isUsed: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    alert(`Kode berhasil dibuat: ${code}`);
+}
+</script>
