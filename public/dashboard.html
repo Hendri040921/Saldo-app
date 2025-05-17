@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Saldo App</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Load Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>💰 Dashboard Saldo</h1>
+            <button id="btnLogout">Logout</button>
+        </header>
+
+        <!-- Info User -->
+        <div class="user-info">
+            <div class="info-card">
+                <h3>Email</h3>
+                <p id="userEmail">-</p>
+            </div>
+            <div class="info-card">
+                <h3>Nomor HP</h3>
+                <p id="userPhone">-</p>
+            </div>
+            <div class="info-card">
+                <h3>Saldo</h3>
+                <p id="userBalance">0</p>
+            </div>
+        </div>
+
+        <!-- Form Klaim Saldo -->
+        <div class="claim-section">
+            <h2>🔑 Klaim Kode Saldo</h2>
+            <input type="text" id="claimCode" placeholder="Masukkan kode">
+            <button id="btnClaim">Klaim Saldo</button>
+            <p id="claimMessage"></p>
+        </div>
+    </div>
+
+    <!-- Load JavaScript -->
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
