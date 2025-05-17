@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verifikasi Email - Saldo App</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Load Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <h2>📧 Verifikasi Email</h2>
+        
+        <div id="verifiedMessage" class="success-message" style="display:none;">
+            <p>Email Anda sudah terverifikasi! Silakan login.</p>
+            <a href="/login.html" class="btn">Ke Halaman Login</a>
+        </div>
+        
+        <div id="unverifiedMessage">
+            <p>Kami telah mengirim link verifikasi ke: <strong id="targetEmail"></strong></p>
+            <p>Jika tidak menerima email:</p>
+            <button id="btnResend" class="auth-button">Kirim Ulang Email</button>
+            <p id="resendStatus"></p>
+        </div>
+    </div>
+
+    <!-- Load Config dan Logic -->
+    <script src="/js/firebase-config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Ambil email dari URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            document.getElementById('targetEmail').textContent = email || 'your@email.com';
+
+            // 2. Cek status verifikasi
+            const auth = firebase.auth();
+            const user = auth.currentUser;
+            
+            if (user) {
+                // Jika user sudah login (misal buka halaman ini setelah register)
+                checkEmailVerified(user);
+            } else {
+                // Jika user belum login (misal buka dari email)
+                auth.onAuthStateChanged((user) => {
+                    if (user) checkEmailVerified(user);
+                });
+            }
+
+            // 3. Tombol kirim ulang
+            document.getElementById('btnResend').addEventListener('click', () => {
+                if (user) {
+                    user.sendEmailVerification()
+                        .then(() => {
+                            document.getElementById('resendStatus').textContent = 
+                                "✅ Email verifikasi terkirim ulang!";
+                        })
+                        .catch(error => {
+                            document.getElementById('resendStatus').textContent = 
+                                "❌ Gagal mengirim: " + error.message;
+                        });
+                }
+            });
+        });
+
+        // Fungsi cek verifikasi
+        function checkEmailVerified(user) {
+            if (user.emailVerified) {
+                document.getElementById('verifiedMessage').style.display = 'block';
+                document.getElementById('unverifiedMessage').style.display = 'none';
+            } else {
+                // Auto-reload setiap 5 detik untuk cek verifikasi
+                setTimeout(() => {
+                    user.reload().then(() => {
+                        checkEmailVerified(user);
+                    });
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
