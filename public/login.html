@@ -9,9 +9,12 @@
         <h2>🔐 Login</h2>
         
         <!-- Form Login -->
-        <input type="email" id="email" placeholder="Email" class="auth-input">
-        <input type="password" id="password" placeholder="Password" class="auth-input">
+        <input type="email" id="loginEmail" placeholder="Email" class="auth-input">
+        <input type="password" id="loginPassword" placeholder="Password" class="auth-input">
         <button onclick="login()" class="auth-button">Masuk</button>
+
+        <!-- Error -->
+        <div id="loginError" style="color: red; margin-top: 10px;"></div>
         
         <p class="auth-link">
             Belum punya akun? <a href="/register.html">Daftar disini</a>
