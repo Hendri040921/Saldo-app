@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Daftar - Saldo App</title>
     <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Tambahkan Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div class="auth-container">
         <h2>Daftar Akun</h2>
+        
         <input type="email" id="email" placeholder="Email">
         <input type="password" id="password" placeholder="Password">
         <input type="text" id="phone" placeholder="Nomor HP">
         <input type="text" id="account" placeholder="Nomor Rekening">
         <button onclick="register()">Daftar</button>
+
+        <!-- Error Message -->
+        <div id="errorMessage" style="color:red; margin-top: 10px;"></div>
+
         <p>Sudah punya akun? <a href="/login.html">Login disini</a></p>
     </div>
+
+    <!-- Firebase Config & Auth Script -->
     <script src="/js/firebase-config.js"></script>
     <script src="/js/auth.js"></script>
 </body>
