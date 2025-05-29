@@ -126,3 +126,13 @@ function initSaldoListener() {
         }
     });
 }
+
+async function logout() {
+    try {
+        await firebase.auth().signOut();
+        window.location.href = "/login.html";
+    } catch (err) {
+        console.error("Logout gagal:", err);
+        alert("Logout error: " + err.message);
+    }
+}
