@@ -126,4 +126,4 @@ function initSaldoListener() {
             document.getElementById("userBalance").textContent = balance;
         }
     });
-}
+    }
