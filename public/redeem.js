@@ -5,10 +5,10 @@ const redeemForm = document.getElementById("redeemForm");
 const redeemResult = document.getElementById("redeemResult");
 
 // ID database dan collection
-const DATABASE_ID = "bitroyalty-db"; // ganti sesuai ID database kamu
-const CODE_COLLECTION = "redeem-codes"; // collection untuk kode unik
-const USER_COLLECTION = "users";        // collection user dan saldo
-const HISTORY_COLLECTION = "history";   // untuk mencatat aktivitas poin
+const DATABASE_ID = "684090e700319f1a1afd"; // ganti sesuai ID database kamu
+const CODE_COLLECTION = "6841da6e0015154fa5c6"; // collection untuk kode unik
+const USER_COLLECTION = "6841dad3003d0a01127e";        // collection user dan saldo
+const HISTORY_COLLECTION = "6841db1b00223a88c768";   // untuk mencatat aktivitas poin
 
 redeemForm.addEventListener("submit", async (e) => {
   e.preventDefault();
