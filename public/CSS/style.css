@@ -1,30 +1,105 @@
-/* /bitroyalty/style.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+  color: #333;
+}
 
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #333; }
+.auth-page {
+  background: linear-gradient(to bottom right, #ffffff, #f5f5f5);
+  padding: 2rem;
+  min-height: 100vh;
+}
 
-.container { max-width: 600px; margin: 0 auto; padding: 20px; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 40px; border-radius: 10px; }
+.form-container {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
 
-h2, h3 { text-align: center; color: #2c3e50; }
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
 
-input[type="email"], input[type="password"], input[type="text"], input[type="number"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; }
+.form-group {
+  margin-bottom: 1.2rem;
+}
 
-button { width: 100%; padding: 10px; margin-top: 10px; background-color: #2c3e50; color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease; }
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
 
-button:hover { background-color: #1a252f; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+}
 
-.notif { margin: 15px 0; padding: 10px; border-radius: 6px; background-color: #dfe6e9; font-weight: bold; color: #2c3e50; text-align: center; }
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-.btn-link { display: block; text-align: center; margin-top: 20px; text-decoration: none; color: #2980b9; font-weight: bold; }
+button:hover {
+  background-color: #e45d00;
+}
 
-.card { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #fafafa; }
+.form-footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
 
-.dashboard-box { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 8px; background-color: #ecf0f1; margin: 10px 0; box-shadow: 0 0 5px rgba(0,0,0,0.05); }
+.form-footer a {
+  color: #ff6b00;
+  text-decoration: none;
+}
 
-.dashboard-box span { font-weight: bold; font-size: 16px; }
+.dashboard {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+}
 
-ul.notifikasi-list { list-style: none; padding: 0; margin: 0; }
+.dashboard h1 {
+  text-align: center;
+  color: #333;
+}
 
-ul.notifikasi-list li { padding: 8px 12px; background: #f0f8ff; margin: 6px 0; border-left: 4px solid #3498db; border-radius: 4px; }
+.card {
+  background: white;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
 
-footer { text-align: center; padding: 10px; font-size: 14px; color: #aaa; margin-top: 40px; }
+.card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #ff6b00;
+}
 
+.notification {
+  background-color: #e6f7ff;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid #1890ff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
