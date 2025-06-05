@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard - Saldo App</title>
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard - BitRoyalty</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="js/dashboard.js"></script>
 </head>
-<body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <h1>💰 Dashboard Saldo</h1>
-            <button id="btnLogout" onclick="logout()">Logout</button>
-        </header>
+<body class="bg-[#f9f9f9] text-gray-800 font-sans">
 
-        <!-- Info User -->
-        <div class="user-info">
-            <div class="info-card">
-                <h3>Email</h3>
-                <p id="userEmail">-</p>
-            </div>
-            <div class="info-card">
-                <h3>Nomor HP</h3>
-                <p id="userPhone">-</p>
-            </div>
-            <div class="info-card">
-                <h3>Saldo</h3>
-                <p id="userBalance">0</p>
-            </div>
+  <header class="bg-[#101820] text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">BitRoyalty</h1>
+    <button id="logoutBtn" class="bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>
+  </header>
+
+  <main class="p-4 space-y-6">
+    <section>
+      <h2 class="text-lg font-semibold mb-2">Saldo Anda</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-medium">Poin Segar</h3>
+          <p id="poinSegar" class="text-2xl font-bold text-green-600">0</p>
         </div>
-
-        <!-- Klaim Saldo -->
-        <div class="claim-section">
-            <h2>🔑 Klaim Kode Saldo</h2>
-            <input type="text" id="claimCode" placeholder="Masukkan kode">
-            <button id="btnClaim">Klaim Saldo</button>
-            <p id="claimMessage"></p>
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-medium">Ternak Poin</h3>
+          <p id="ternakPoin" class="text-2xl font-bold text-blue-600">0</p>
         </div>
-    </div>
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-medium">Tanam Poin</h3>
+          <p id="tanamPoin" class="text-2xl font-bold text-yellow-600">0</p>
+        </div>
+      </div>
+    </section>
 
-    <!-- Firebase Config & Script -->
-    <script src="/js/firebase-config.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <section>
+      <h2 class="text-lg font-semibold mb-2">Notifikasi & Riwayat</h2>
+      <ul id="notifikasiList" class="bg-white p-4 rounded shadow space-y-2 max-h-64 overflow-y-auto">
+        <li class="text-gray-500 italic">Memuat histori poin...</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="text-center text-sm p-4 text-gray-500">
+    &copy; 2025 BitRoyalty. All rights reserved.
+  </footer>
+
 </body>
 </html>
