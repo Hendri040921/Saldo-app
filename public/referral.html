@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Referral | BitRoyalty</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Program Referral 20% Seumur Hidup</h2>
+
+    <div class="referral-box">
+      <p>Kode Referral Kamu:</p>
+      <input type="text" id="referralCode" readonly>
+      <button onclick="copyReferral()">Salin</button>
+    </div>
+
+    <h3>Downline yang Kamu Rekrut</h3>
+    <table id="downlineTable">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Tanggal Bergabung</th>
+          <th>Pendapatan Pasif</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="totalReferralIncome">
+      Total Pendapatan Pasif Referral: <strong><span id="totalIncome">0</span> Poin</strong>
+    </div>
+  </div>
+
+  <script type="module" src="js/referral.js"></script>
+</body>
+</html>
