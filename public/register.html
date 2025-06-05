@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Daftar - Saldo App</title>
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <!-- Tambahkan Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar Akun - BitRoyalty</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-    <div class="auth-container">
-        <h2>Daftar Akun</h2>
-        
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <input type="text" id="phone" placeholder="Nomor HP">
-        <input type="text" id="account" placeholder="Nomor Rekening">
-        <button onclick="register()">Daftar</button>
+<body class="auth-page">
 
-        <!-- Error Message -->
-        <div id="errorMessage" style="color:red; margin-top: 10px;"></div>
+  <div class="form-container">
+    <h2>Daftar Akun BitRoyalty</h2>
 
-        <p>Sudah punya akun? <a href="/login.html">Login disini</a></p>
-    </div>
+    <form id="register-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Alamat Email" required />
+      </div>
 
-    <!-- Firebase Config & Auth Script -->
-    <script src="/js/firebase-config.js"></script>
-    <script src="/js/auth.js"></script>
+      <div class="form-group">
+        <label for="password">Kata Sandi</label>
+        <input type="password" id="password" placeholder="Minimal 8 karakter" required />
+      </div>
+
+      <div class="form-group">
+        <label for="confirm">Konfirmasi Sandi</label>
+        <input type="password" id="confirm" placeholder="Ulangi kata sandi" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Daftar & Verifikasi Email</button>
+    </form>
+
+    <p class="form-footer">
+      Sudah punya akun? <a href="login.html">Masuk di sini</a>
+    </p>
+  </div>
+
+  <script src="js/appwrite-config.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
