@@ -1,3 +1,11 @@
+// Import fungsi dari autoInterest.js
+import hitungBungaDanHistori from './autoInterest.js';
+
+// Jalankan fungsi saat halaman siap
+document.addEventListener('DOMContentLoaded', () => {
+  hitungBungaDanHistori(); // Panggil fungsi di sini
+});
+
 // js/dashboard.js
 
 import { Client, Account, Databases, Query } from 'appwrite'; import { client, account, databases } from './appwrite-config.js';
