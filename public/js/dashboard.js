@@ -1,128 +1,74 @@
-// Inisialisasi Firestore
-const db = firebase.firestore();
-let currentUser = null;
+// js/dashboard.js
 
-// Fungsi: Tambahkan bunga harian (3% per tahun ≈ 0.0082% per hari)
-async function updateBalanceWithInterest(userId) {
-  const userRef = db.collection('users').doc(userId);
-  await db.runTransaction(async (tx) => {
-    const doc = await tx.get(userRef);
-    if (!doc.exists) return;
+import { Client, Account, Databases, Query } from 'appwrite'; import { client, account, databases } from './appwrite-config.js';
 
-    const data = doc.data();
-    const lastUpdate = data.lastInterestUpdate?.toDate() ?? new Date(0);
-    const now = new Date();
+const poinSegarEl = document.getElementById('poinSegar'); const ternakPoinEl = document.getElementById('ternakPoin'); const tanamPoinEl = document.getElementById('tanamPoin'); const notifikasiList = document.getElementById('notifikasiList'); const logoutBtn = document.getElementById('logoutBtn');
 
-    const daysPassed = Math.floor((now - lastUpdate) / (1000 * 60 * 60 * 24));
-    if (daysPassed <= 0) return;
+const DATABASE_ID = 'bitroyalty'; const USER_COLLECTION_ID = 'users'; const HISTORY_COLLECTION_ID = 'history';
 
-    const balance = data.balance ?? 0;
-    const annualRate = 0.03;
-    const dailyRate = annualRate / 365;
-    const newBalance = balance * Math.pow(1 + dailyRate, daysPassed);
+// Logout button handler logoutBtn.addEventListener('click', async () => { await account.deleteSession('current'); window.location.href = 'login.html'; });
 
-    tx.update(userRef, {
-      balance: Math.floor(newBalance),
-      lastInterestUpdate: firebase.firestore.Timestamp.fromDate(now)
-    });
-  });
+async function loadDashboard() { try { const user = await account.get();
+
+const response = await databases.getDocument(
+  DATABASE_ID,
+  USER_COLLECTION_ID,
+  user.$id
+);
+
+const now = new Date();
+const lastUpdate = new Date(response.lastUpdate);
+
+const daysPassed = Math.floor((now - lastUpdate) / (1000 * 60 * 60 * 24));
+
+let poinSegar = response.poinSegar || 0;
+let ternakPoin = response.ternakPoin || 0;
+let tanamPoin = response.tanamPoin || 0;
+
+// Hitung bunga harian majemuk
+for (let i = 0; i < daysPassed; i++) {
+  const bungaTernak = ternakPoin >= 18000000 ? ternakPoin * (0.07 / 365) : 0;
+  const bungaTanam = tanamPoin >= 180000000 ? tanamPoin * (0.20 / 365) : 0;
+  const bungaSegar = poinSegar * (0.02 / 365);
+
+  poinSegar += bungaSegar + bungaTernak + bungaTanam;
 }
 
-// Fungsi klaim kode saldo
-async function claimSaldo() {
-  const code = document.getElementById("claimCode").value.trim();
-  const messageEl = document.getElementById("claimMessage");
-
-  if (!code) {
-    messageEl.textContent = "Silakan masukkan kode.";
-    return;
-  }
-
-  try {
-    const codeDoc = await db.collection('saldoCodes').doc(code).get();
-
-    if (!codeDoc.exists) {
-      messageEl.textContent = "Kode tidak valid.";
-      return;
-    }
-
-    if (codeDoc.data().isUsed) {
-      messageEl.textContent = "Kode sudah digunakan.";
-      return;
-    }
-
-    await db.runTransaction(async (tx) => {
-      const userRef = db.collection('users').doc(currentUser.uid);
-      const userDoc = await tx.get(userRef);
-
-      const currentBalance = userDoc.data().balance ?? 0;
-      const amount = codeDoc.data().amount ?? 0;
-      const newBalance = currentBalance + amount;
-
-      tx.update(userRef, { balance: newBalance });
-      tx.update(codeDoc.ref, { isUsed: true });
-    });
-
-    messageEl.textContent = "Saldo berhasil ditambahkan!";
-    document.getElementById("claimCode").value = "";
-  } catch (error) {
-    console.error("Klaim gagal:", error);
-    messageEl.textContent = "Terjadi kesalahan: " + error.message;
-  }
-}
-
-// Listener realtime saldo
-function initSaldoListener() {
-  db.collection('users').doc(currentUser.uid).onSnapshot((doc) => {
-    if (doc.exists) {
-      const balance = doc.data().balance ?? 0;
-      document.getElementById("userBalance").textContent = balance;
-    }
-  });
-}
-
-// Jalankan semua setelah DOM siap
-document.addEventListener("DOMContentLoaded", () => {
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (!user || !user.emailVerified) {
-      window.location.href = "/login.html";
-      return;
-    }
-
-    currentUser = user;
-    document.getElementById("userEmail").textContent = user.email;
-
-    try {
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
-        const data = userDoc.data();
-        document.getElementById("userPhone").textContent = data.phone ?? "-";
-
-        await updateBalanceWithInterest(user.uid);
-        initSaldoListener();
-      }
-    } catch (error) {
-      console.error("Gagal ambil data user:", error);
-    }
-
-    // Tombol logout
-    const btnLogout = document.getElementById("btnLogout");
-    if (btnLogout) {
-      btnLogout.addEventListener("click", async () => {
-        try {
-          await firebase.auth().signOut();
-          window.location.href = "/login.html";
-        } catch (err) {
-          console.error("Logout gagal:", err);
-          alert("Logout error: " + err.message);
-        }
-      });
-    }
-
-    // Tombol klaim
-    const btnClaim = document.getElementById("btnClaim");
-    if (btnClaim) {
-      btnClaim.addEventListener("click", claimSaldo);
-    }
-  });
+// Simpan update baru
+await databases.updateDocument(DATABASE_ID, USER_COLLECTION_ID, user.$id, {
+  poinSegar,
+  lastUpdate: now.toISOString()
 });
+
+// Tampilkan ke UI
+poinSegarEl.textContent = Math.floor(poinSegar).toLocaleString();
+ternakPoinEl.textContent = Math.floor(ternakPoin).toLocaleString();
+tanamPoinEl.textContent = Math.floor(tanamPoin).toLocaleString();
+
+// Tambahkan notifikasi bunga (jika ada bunga)
+if (daysPassed > 0) {
+  await databases.createDocument(DATABASE_ID, HISTORY_COLLECTION_ID, 'unique()', {
+    userId: user.$id,
+    message: `Bunga harian ditambahkan setelah ${daysPassed} hari.`,
+    createdAt: now.toISOString()
+  });
+}
+
+// Ambil dan tampilkan histori
+const histories = await databases.listDocuments(DATABASE_ID, HISTORY_COLLECTION_ID, [
+  Query.equal('userId', user.$id),
+  Query.orderDesc('createdAt'),
+  Query.limit(20)
+]);
+
+notifikasiList.innerHTML = '';
+histories.documents.forEach(doc => {
+  const li = document.createElement('li');
+  li.textContent = `[${new Date(doc.createdAt).toLocaleDateString()}] ${doc.message}`;
+  notifikasiList.appendChild(li);
+});
+
+} catch (error) { console.error(error); alert('Gagal memuat dashboard. Silakan login ulang.'); window.location.href = 'login.html'; } }
+
+loadDashboard();
+
