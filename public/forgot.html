@@ -4,31 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lupa Password - BitRoyalty</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="min-h-screen bg-gradient-to-b from-white to-gray-100 flex items-center justify-center">
-  <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Lupa Password</h2>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
+  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Lupa Password</h2>
+    <p class="mb-4 text-sm text-gray-600 text-center">Masukkan email kamu dan pesan ke admin untuk reset manual.</p>
     <form id="forgotForm" class="space-y-4">
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
-        <input type="email" id="email" name="email" required class="w-full p-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-400" />
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" required placeholder="emailkamu@email.com"
+               class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
-      <button type="submit" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">Kirim Link Reset</button>
-      <div class="text-center mt-3">
-        <a href="login.html" class="text-sm text-blue-600 hover:underline">Kembali ke Login</a>
+      <div>
+        <label for="pesan" class="block text-sm font-medium text-gray-700">Pesan ke Admin</label>
+        <textarea id="pesan" rows="3" required placeholder="Contoh: Saya lupa password, mohon bantu reset."
+                  class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
+      <a href="#" id="kirimWA" target="_blank"
+         class="block bg-green-600 text-white text-center py-2 rounded hover:bg-green-700 transition">
+        Kirim ke WhatsApp Admin
+      </a>
+      <p class="text-center text-sm mt-4">
+        <a href="login.html" class="text-blue-600 hover:underline">Kembali ke login</a>
+      </p>
     </form>
   </div>
 
-  <script type="module">
-    import { forgotPassword } from './js/auth.js';
+  <script>
+    document.getElementById("kirimWA").addEventListener("click", function () {
+      const email = document.getElementById("email").value.trim();
+      const pesan = document.getElementById("pesan").value.trim();
+      if (!email || !pesan) return alert("Isi semua kolom terlebih dahulu.");
 
-    const form = document.getElementById('forgotForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      await forgotPassword(email);
+      const noAdmin = "083856314798"; // GANTI dengan nomor admin kamu (format internasional)
+      const link = `https://wa.me/${noAdmin}?text=Halo Admin BitRoyalty,%0ASaya lupa password.%0AEmail: ${encodeURIComponent(email)}%0APesan: ${encodeURIComponent(pesan)}`;
+      this.href = link;
     });
   </script>
 </body>
