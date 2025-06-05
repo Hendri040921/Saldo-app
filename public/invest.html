@@ -1,0 +1,36 @@
+<!-- /bitroyalty/invest.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Investasi Poin | BitRoyalty</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h2>Investasi Poin</h2>
+
+    <section class="card">
+      <h3>🌿 Ternak Poin</h3>
+      <p>Bunga 7% per tahun, cair harian. Syarat: Setor rutin 18.000.000 poin per hari</p>
+      <input type="number" id="ternakAmount" placeholder="Jumlah poin"/>
+      <button onclick="investTernak()">Setor Ternak</button>
+    </section>
+
+    <section class="card">
+      <h3>🌾 Tanam Poin</h3>
+      <p>Bunga 20% per tahun, cair harian. Syarat: Setor rutin 180.000.000 poin per hari</p>
+      <input type="number" id="tanamAmount" placeholder="Jumlah poin"/>
+      <button onclick="investTanam()">Setor Tanam</button>
+    </section>
+
+    <div id="investMessage" class="notif"></div>
+
+    <a href="dashboard.html" class="btn-link">⬅ Kembali ke Dashboard</a>
+  </main>
+
+  <script src="js/appwrite-config.js"></script>
+  <script src="js/invest.js"></script>
+</body>
+</html>
