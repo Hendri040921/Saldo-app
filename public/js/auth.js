@@ -1,7 +1,7 @@
 // js/auth.js
 
 import { Client, Account, ID } from "https://cdn.jsdelivr.net/npm/appwrite@13.0.0/+esm";
-import { client, account } from ".js/appwrite-config.js";
+import { client, account } from "appwrite-config.js";
 
 // Fungsi Register
 export async function registerUser(email, password, name) {
